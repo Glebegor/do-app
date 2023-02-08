@@ -1,7 +1,7 @@
 package todo
 
 import (
-	"content"
+	"context"
 	"net/http"
 	"time"
 )
@@ -20,6 +20,6 @@ func (s *Server) Run(port string) error {
 	return s.httpServer.ListenAndServe()
 }
 
-func (s *Server) shutdown(ctx content.Context) error {
+func (s *Server) shutdown(ctx context.Context) error {
 	return s.httpServer.Shutdown(ctx)
 }
