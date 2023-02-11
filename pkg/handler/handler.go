@@ -1,5 +1,9 @@
 package handler
 
+import(
+	"github.com/gin-gonic/gin"
+)
+
 type handler struct {
 }
 
@@ -20,15 +24,16 @@ func (h *handler) initRoutes() *gin.Engine {
 			lists.GET("/:id")
 			lists.PUT("/:id")
 			lists.DELETE("/:id")
-			
+
 			item := lists.Group(":id/items")
 			{
-				item.POST('/')
-				item.GET('/')
-				item.GET('/:item_id')
-				item.PUT('/:item_id')
-				item.DELETE('/:item_id')
+				item.POST("/")
+				item.GET("/")
+				item.GET("/:item_id")
+				item.PUT("/:item_id")
+				item.DELETE("/:item_id")
 			}
 		}
 	}
+	return route
 }
