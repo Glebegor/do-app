@@ -25,13 +25,13 @@ func (h *handler) initRoutes() *gin.Engine {
 			lists.PUT("/:id")
 			lists.DELETE("/:id")
 
-			item := lists.Group(":id/items")
+			items := lists.Group(":id/items")
 			{
-				item.POST("/")
-				item.GET("/")
-				item.GET("/:item_id")
-				item.PUT("/:item_id")
-				item.DELETE("/:item_id")
+				items.POST("/")
+				items.GET("/")
+				items.GET("/:item_id")
+				items.PUT("/:item_id")
+				items.DELETE("/:item_id")
 			}
 		}
 	}
