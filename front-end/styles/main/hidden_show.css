@@ -1,0 +1,23 @@
+.hidden{
+    display: none;
+}
+@media (max-width: 1024px) {
+    .hiden1024
+    {
+        display: none!important;
+    }
+    .show1024
+    {
+        display: block!important;
+    }
+}
+@media (max-width: 768px) {
+    .hiden768
+    {
+        display: none!important;
+    }
+    .show768
+    {
+        display: block!important;
+    }
+}

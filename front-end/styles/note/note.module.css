@@ -1,0 +1,195 @@
+.mainlsit
+{
+    width: 100%;
+    height: 860px;
+}
+.mainlsit .container
+{
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.listoflist
+{
+    padding:20px;
+    width: 20%;
+    height: 95.4%;
+    background: #2f2f2f;
+    overflow-y: scroll;
+}
+.list_changelistbtn
+{
+    transition: .4s;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ff0066;;
+    border-top-right-radius: 28px;
+}
+.list_changelistbtn:hover
+{
+    background-color: rgba(47, 47, 47, .5);
+    backdrop-filter: blur(4px);
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+}
+.list_changelistbtn:hover img
+{
+    width: 30%;
+}
+.list_changelistbtn img
+{
+    width: 70%;
+    align-items: center;
+
+}
+.list_item:first-child
+{
+    margin-top: 0px;
+}
+.list_item
+{
+    backdrop-filter: blur(10px);
+    position: relative;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 20px 0;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0,0,0,.4);
+    border-radius: 28px;
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.list_title
+{
+    box-shadow: inset 0px 0px 20px rgba(0,0,0,1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    color: #fff;
+    font-weight: 400;
+}
+.list_title_button
+{
+    cursor: pointer;
+    transition: .3s;
+    background-color: rgba(0,0,0,0);
+    border: #fff 2px solid;
+    padding: 10px 20px;
+    border-radius: 28px;
+    color: #fff;
+    font-size: 18px;
+}
+.list_title_button:hover
+{
+    letter-spacing: .25em;
+}
+.list_addbtnwrap
+{
+    transition: 3s;
+    cursor: pointer;
+
+    position: relative;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 20px 0;
+    width: 100%;
+    height: 100px;
+    border: 2px solid #ff0066;
+    background-color: rgba(0,0,0,0);
+    border-radius: 28px;
+}
+.list_addbtnwrap div
+{
+    transition: .3s;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #ff0066;
+    width: 50px;
+    height: 5px;
+}
+.list_addbtnwrap div::before
+{
+    transition: .3s;
+    border-radius: 28px;
+    position: absolute;
+    content: '';
+    transform: rotate(90deg);
+    background-color: #ff0066;
+    width: 100%;
+    height: 100%;
+}
+.list_addbtnwrap:hover
+{
+    background-color: #ff0066;
+
+}
+.list_addbtnwrap:hover div::before
+{
+    transition: .3s;
+    animation: animatebut 2s;
+}
+.list_addbtnwrap:hover div::after
+{
+    transition: .3s;
+    color: #fff;
+    position: absolute;
+    z-index: 1000;
+    content: "Add list";
+    font-size: 26px;
+    width: 100px;
+
+    animation: textanbut 2s;
+}
+.listoftasks
+{
+    width: 70%;
+    height: 100%;
+    background-color: #2f2f2f;
+}
+@keyframes animatebut {
+    0%{
+        transform: rotate(90deg) scaleX(1);
+    }50%{
+        transform: rotate(90deg) scaleX(0);
+    }51%{
+        transform: rotate(0deg) scaleX(0);
+    
+    }100%{
+        transform: rotate(0deg) scaleX(4.4) scaleY(18);
+    }
+}
+@keyframes textanbut {
+    0%{
+        opacity: 0;
+    }50%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}

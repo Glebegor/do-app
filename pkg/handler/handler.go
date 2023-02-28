@@ -7,7 +7,7 @@ import (
 type Handler struct {
 }
 
-func (h *Handler) initRoutes() *gin.Engine {
+func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 
 	auth := router.Group("/auth")
@@ -15,7 +15,7 @@ func (h *Handler) initRoutes() *gin.Engine {
 		auth.POST("/sing-up", h.singUp)
 		auth.POST("/sing-in", h.singIn)
 	}
-	api := router.Group("/todo")
+	api := router.Group("/api")
 	{
 		lists := api.Group("/lists")
 		{

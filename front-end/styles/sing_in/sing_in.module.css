@@ -1,0 +1,99 @@
+.sing_in
+{
+    height: 720px;
+}
+.sing_in_title
+{
+    color: #2f2f2f;
+}
+.sing_in .container
+{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sing_in_form
+{
+    border-radius: 28px;
+    background-color: #ff0066;
+    height: 55%;
+    padding: 20px;
+}
+.sing_in_inputs
+{
+    transition: .3s;
+    color: #2f2f2f;
+    font-size: 26px;
+    background-color: #a60043;
+    border-radius: 200px;
+    margin: 5px 0;
+    border: none;
+    outline: none;
+    width: 97%;
+    padding: 20px 10px;
+}
+.sing_in_inputs:hover
+{
+    box-shadow: 0px 0px 10px #d9d9d9;
+}
+.sing_in_inputs:focus
+{
+    transform: translateX(-10px);
+}
+.sing_in_inputs::placeholder
+{
+    color: #d9d9d9;
+}
+.sing_in_btn
+{
+    transition: .3s;
+    cursor: pointer;
+    color: #2f2f2f;
+    border-radius: 28px;
+    border: none;
+    background-color: #a60043;
+    font-size: 26px;
+    padding: 10px 20px;
+}
+.sing_in_btn:hover
+{
+    box-shadow: 0px 0px 10px #d9d9d9;
+    letter-spacing: .2em;
+}
+header
+{
+    top: 0px;
+}
+.sing_in_errors
+{
+    background-color: #2f2f2f;
+    padding: 10px;
+    border-radius: 28px;
+    width: 93%;
+    color: rgb(255, 64, 64);
+}
+.sing_in_checkbox
+{
+    width: 20px;
+    height: 20px;
+}
+
+.sing_in_lable_checkbox
+{
+    font-size: 18px;
+}
+@media (max-width: 1280px) {
+}
+@media (max-width: 1024px) {
+}
+@media (max-width: 768px) {
+    .sing_in_form
+    {
+        border-radius: 0px;
+    }
+}
+@media (max-width: 470px) {
+}
+@media (max-width: 425px) {
+}
