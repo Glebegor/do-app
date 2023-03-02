@@ -3,12 +3,14 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	todo "github.com/Glebegor/do-app"
 	handler "github.com/Glebegor/do-app/pkg/handler"
 	repository "github.com/Glebegor/do-app/pkg/repository"
 	service "github.com/Glebegor/do-app/pkg/service"
+	godotenv "github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 	viper "github.com/spf13/viper"
 )
@@ -18,13 +20,17 @@ func main() {
 		log.Fatalf("Error initializing config: %s", err.Error())
 	}
 
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("error loading env variables: %s", err.Error())
+	}
+
 	db, err := repository.NewPostgresDb(repository.Config{
-		Host:     "localhost",
-		Port:     "5436",
-		Username: "postgres",
-		Password: "vlgleg555",
-		DBName:   "postgres",
-		SSLMode:  "disable",
+		Host:     viper.GetString("db.Host"),
+		Port:     viper.GetString("db.Port"),
+		Username: viper.GetString("db.Username"),
+		Password: os.Getenv("DB_PASSWORD"),
+		DBName:   viper.GetString("db.DBName"),
+		SSLMode:  viper.GetString("db.SSLMode"),
 	})
 	if err != nil {
 		log.Fatalf("failed to initializate db: %s", err.Error())
