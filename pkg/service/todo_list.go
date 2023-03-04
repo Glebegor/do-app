@@ -12,7 +12,6 @@ type TodoListService struct {
 func NewTodoListService(repo repository.TodoList) *TodoListService {
 	return &TodoListService{repo: repo}
 }
-
 func (s *TodoListService) Create(UserId int, list todo.TodoList) (int, error) {
 	return s.repo.Create(UserId, list)
 }

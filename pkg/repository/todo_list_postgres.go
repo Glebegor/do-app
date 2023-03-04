@@ -6,7 +6,6 @@ import (
 
 	todo "github.com/Glebegor/do-app"
 	"github.com/jmoiron/sqlx"
-	"github.com/sirupsen/logrus"
 )
 
 type TodoListPostgres struct {
@@ -72,10 +71,9 @@ func (r *TodoListPostgres) Update(UserId, listId int, input todo.UpdateListInput
 		argId++
 	}
 	setQuery := strings.Join(setValues, ", ")
+
 	query := fmt.Sprintf("UPDATE %s tl SET %s FROM %s ul WHERE tl.id = ul.list_id AND ul.list_id=$%d AND ul.user_id =$%d", todo_listsTable, setQuery, users_listsTable, argId, argId+1)
 	args = append(args, listId, UserId)
-	logrus.Debugf("updateQuery: %s", query)
-	logrus.Debugf("args: %s", args)
 
 	_, err := r.db.Exec(query, args...)
 	return err

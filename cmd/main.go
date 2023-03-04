@@ -1,8 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	todo "github.com/Glebegor/do-app"
@@ -14,6 +16,17 @@ import (
 	logrus "github.com/sirupsen/logrus"
 	viper "github.com/spf13/viper"
 )
+
+//  @title Todo APP API
+//  @version 1.0
+// 	@description Server(API, back-end) for Todo Application
+
+// @host localhost:8000
+// @BasePath /
+
+//	@securityDefinitions.apikey ApiKeyAuth
+//	@in header
+//  @name Authorization
 
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
@@ -44,9 +57,24 @@ func main() {
 	handlers := handler.NewHandler(services)
 
 	server := new(todo.Server)
-	fmt.Printf("%s: Server is running on port 8000. BTW", time.Now())
-	if err := server.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-		logrus.Fatalf("Error while running server: %s, %s", err.Error(), time.Now())
+	go func() {
+		if err := server.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+			logrus.Fatalf("Error while running server: %s, %s", err.Error(), time.Now())
+		}
+	}()
+	logrus.Printf("%s: Server is running on port 8000. BTW", time.Now())
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	logrus.Printf("%s: Server Shutting Down. Press F... Bro... \n", time.Now())
+
+	if err := server.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error accured no server shutting down: %s", err.Error())
+	}
+	if err := db.Close(); err != nil {
+		logrus.Errorf("error accured no db connection close: %s", err.Error())
 	}
 }
 

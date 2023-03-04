@@ -8,6 +8,18 @@ import (
 	todo "github.com/Glebegor/do-app"
 )
 
+// @Summary SingUp
+// @Tags auth
+// @Description registration account
+// @ID create-account
+// @Accept json
+// @Produce json
+// @Param input body todo.User true "account info"
+// @Success 200 {integer} integer 1
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /auth/sing-up [post]
 func (h *Handler) singUp(c *gin.Context) {
 	var input todo.User
 
@@ -30,6 +42,18 @@ type singInInput struct {
 	Password string `json: "password" binding:"required"`
 }
 
+// @Summary SingIp
+// @Tags auth
+// @Description login account
+// @ID login
+// @Accept json
+// @Produce json
+// @Param input body singInInput true "credentials"
+// @Success 200 {string} string "token"
+// @Failure 400,404 {object} errorResponse
+// @Failure 500 {object} errorResponse
+// @Failure default {object} errorResponse
+// @Router /auth/sing-in [post]
 func (h *Handler) singIn(c *gin.Context) {
 	var input singInInput
 
