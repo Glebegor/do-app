@@ -1,5 +1,9 @@
 port: "8000"
 
+secret:
+  Salt: "lkj41340ewrlkj4324ldsf"
+  SingingKey: "dsfu0u423jefs8dufp32ioj#wqe12"
+
 db: 
   Host: "localhost"
   Port: "5436"

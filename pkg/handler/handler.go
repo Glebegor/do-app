@@ -7,7 +7,6 @@ import (
 
 type Handler struct {
 	services *service.Service
-	// repositoryes *repository.Repository
 }
 
 func NewHandler(services *service.Service) *Handler {
@@ -22,7 +21,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		auth.POST("/sing-up", h.singUp)
 		auth.POST("/sing-in", h.singIn)
 	}
-	api := router.Group("/api")
+	api := router.Group("/api", h.userIndentity)
 	{
 		lists := api.Group("/lists")
 		{
