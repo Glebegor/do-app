@@ -8,6 +8,9 @@ import (
 type errorResponse struct {
 	Message string `json: "message"`
 }
+type statuseResponse struct {
+	Status string `json:"status"`
+}
 
 func newErrorResponse(c *gin.Context, statusCode int, message string) {
 	logrus.Errorf(message)

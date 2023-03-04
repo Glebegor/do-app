@@ -2,9 +2,11 @@ package repository
 
 import (
 	"fmt"
+	"strings"
 
 	todo "github.com/Glebegor/do-app"
 	"github.com/jmoiron/sqlx"
+	"github.com/sirupsen/logrus"
 )
 
 type TodoListPostgres struct {
@@ -48,4 +50,33 @@ func (r *TodoListPostgres) GetById(UserId, listId int) (todo.TodoList, error) {
 	query := fmt.Sprintf("SELECT tl.id, tl.title, tl.description FROM %s tl INNER JOIN %s ul on tl.id = ul.list_id WHERE ul.user_id=$1 AND ul.list_id=$2", todo_listsTable, users_listsTable)
 	err := r.db.Get(&list, query, UserId, listId)
 	return list, err
+}
+func (r *TodoListPostgres) Delete(UserId, listId int) error {
+	query := fmt.Sprintf("DELETE FROM %s tl USING %s ul WHERE tl.id=ul.list_id AND ul.user_id=$1 AND ul.list_id=$2", todo_listsTable, users_listsTable)
+	_, err := r.db.Exec(query, UserId, listId)
+	return err
+}
+func (r *TodoListPostgres) Update(UserId, listId int, input todo.UpdateListInput) error {
+	setValues := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if input.Title != nil {
+		setValues = append(setValues, fmt.Sprintf("title=$%d", argId))
+		args = append(args, *input.Title)
+		argId++
+	}
+	if input.Description != nil {
+		setValues = append(setValues, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *input.Description)
+		argId++
+	}
+	setQuery := strings.Join(setValues, ", ")
+	query := fmt.Sprintf("UPDATE %s tl SET %s FROM %s ul WHERE tl.id = ul.list_id AND ul.list_id=$%d AND ul.user_id =$%d", todo_listsTable, setQuery, users_listsTable, argId, argId+1)
+	args = append(args, listId, UserId)
+	logrus.Debugf("updateQuery: %s", query)
+	logrus.Debugf("args: %s", args)
+
+	_, err := r.db.Exec(query, args...)
+	return err
 }
