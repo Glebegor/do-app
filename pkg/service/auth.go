@@ -4,7 +4,6 @@ import (
 	"crypto/sha1"
 	"errors"
 	"fmt"
-	"os"
 	"time"
 
 	todo "github.com/Glebegor/do-app"
@@ -13,7 +12,9 @@ import (
 )
 
 const (
-	TokenTTl = 12 * time.Hour
+	Salt       = "lkj41340ewrlkj4324ldsf"
+	SingingKey = "dsfu0u423jefs8dufp32ioj#wqe12"
+	TokenTTl   = 12 * time.Hour
 )
 
 type tokenClaims struct {
@@ -45,7 +46,7 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 		},
 		user.Id,
 	})
-	return token.SignedString([]byte(os.Getenv("SingingKey")))
+	return token.SignedString([]byte(SingingKey))
 }
 
 func (s *AuthService) ParseToken(accesToken string) (int, error) {
@@ -53,7 +54,7 @@ func (s *AuthService) ParseToken(accesToken string) (int, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid singing method")
 		}
-		return []byte(os.Getenv("SingingKey")), nil
+		return []byte(SingingKey), nil
 	})
 	if err != nil {
 		return 0, err
@@ -68,5 +69,5 @@ func (s *AuthService) ParseToken(accesToken string) (int, error) {
 func (s *AuthService) generatePasswordHash(password string) string {
 	hash := sha1.New()
 	hash.Write([]byte(password))
-	return fmt.Sprintf("%x", hash.Sum([]byte(os.Getenv("Salt"))))
+	return fmt.Sprintf("%x", hash.Sum([]byte(Salt)))
 }
