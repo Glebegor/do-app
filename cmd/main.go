@@ -13,6 +13,7 @@ import (
 	service "github.com/Glebegor/do-app/pkg/service"
 	godotenv "github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+
 	logrus "github.com/sirupsen/logrus"
 	viper "github.com/spf13/viper"
 )
@@ -24,9 +25,9 @@ import (
 // @host localhost:8000
 // @BasePath /
 
-//	@securityDefinitions.apikey ApiKeyAuth
-//	@in header
-//  @name Authorization
+//		@securityDefinitions.apikey ApiKeyAuth
+//		@in header
+//	 @name Authorization
 
 func main() {
 	logrus.SetFormatter(new(logrus.JSONFormatter))
