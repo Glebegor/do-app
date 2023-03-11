@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	_ "github.com/Glebegor/do-app/docs"
-	cors "github.com/gin-contrib/cors"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -18,8 +17,25 @@ func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
+func CORS() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
+	}
+}
+
 func (h *Handler) InitRoutes() *gin.Engine {
-	router := gin.Default()
+	router := gin.New()
+	router.Use(CORS())
 
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	auth := router.Group("/auth")
@@ -50,7 +66,5 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			items.DELETE("/:id", h.deleteItem)
 		}
 	}
-	router.Use(cors.Default())
-	router.Run()
 	return router
 }
