@@ -19,7 +19,8 @@ const (
 
 type tokenClaims struct {
 	jwt.StandardClaims
-	UserId int `json: "user_id"`
+	UserId   int    `json: "user_id"`
+	Username string `json: "username"`
 }
 type AuthService struct {
 	repo repository.Authorization
@@ -45,11 +46,12 @@ func (s *AuthService) GenerateToken(username, password string) (string, error) {
 			IssuedAt:  time.Now().Unix(),
 		},
 		user.Id,
+		username,
 	})
 	return token.SignedString([]byte(SingingKey))
 }
 
-func (s *AuthService) ParseToken(accesToken string) (int, error) {
+func (s *AuthService) ParseToken(accesToken string) (int, string, error) {
 	token, err := jwt.ParseWithClaims(accesToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid singing method")
@@ -57,13 +59,13 @@ func (s *AuthService) ParseToken(accesToken string) (int, error) {
 		return []byte(SingingKey), nil
 	})
 	if err != nil {
-		return 0, err
+		return 0, "", err
 	}
 	claims, ok := token.Claims.(*tokenClaims)
 	if !ok {
-		return 0, errors.New("token claims are not of type *tokenClaims")
+		return 0, "", errors.New("token claims are not of type *tokenClaims")
 	}
-	return claims.UserId, nil
+	return claims.UserId, claims.Username, nil
 }
 
 func (s *AuthService) generatePasswordHash(password string) string {
